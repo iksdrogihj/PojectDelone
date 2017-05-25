@@ -11,9 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
-#include "GraphicTypes.hpp"
-
-enum ErrCode{SUCCESS, FAILED};
+#include "Types.hpp"
 
 //=============================================================================
 /// @brief  Main Class that will handle all triangulation functionality
@@ -27,55 +25,107 @@ public:
     ~Delaunay();
     
     //=========================================================================
+    /// @fn triangulate
+    /// @brief  Main function that handles the entire triangulation sequence.
+    ///
+    /// @param  Name of the file with our sample points.
+    ///
+    /// @ret    ErrCode for the state of completion.
+    //=========================================================================
+    ErrCode triangulate(const char* file);
+    
+    //=========================================================================
+    /// @fn printPointArray
+    /// @brief  Prints the values stored in the points array.
+    ///
+    //=========================================================================
+    void printPointArray();
+private:
+    
+    // Dissable cpy ctor & assignment operator
+    Delaunay(const Delaunay&);
+    void operator=(const Delaunay&);
+    
+    
+    //=========================================================================
     /// @fn  fileInput
     /// @brief  Opens the file argument takes it`s input and places it in
     ///         points array
     ///
     /// @param  file - Name of the input file
+    ///
+    /// @ret    ErrCode for the state of completion.
     //=========================================================================
-    int fileInput(const char* file);
+    ErrCode fileInput(const char* file);
     
     //=========================================================================
-    /// @fn bottomUpMergeSort
-    /// @brief  Sorts the points array using merge sort after it`s been filled
-    ///         from fileInput.
+    /// @fn  splitPointsArray
+    /// @brief  Splits the points array into 2 arrays. 1 with the 2d Coords x/y
+    ///         and one with the height that will be used for rendering.
+    ///         We do this so we wont have to carry the extra baggage of an
+    ///         unused field(i.e the height)
     ///
-    /// @ret    ErrCode for state of completion
+    ///
+    /// @ret    ErrCode for the state of completion.
+    /// @NOTE   After this function executes points will no longer be a valid
+    ///         pointer.
     //=========================================================================
-    ErrCode bottomUpMergeSort();
+    ErrCode splitPointsArray();
     
     //=========================================================================
-    /// @fn printPointArray
-    /// @brief  prints the values stored in the points array.
+    /// @fn  initializeMainTriangle
+    /// @brief  Initializes the main circumscribing triangle. The main triangles
+    ///         vertex coords are the last 3 indexes of the coords array.
     ///
     //=========================================================================
-    void printPointArray();
-private:
-    // Dissable cpy ctor & assignment operator
-    Delaunay(const Delaunay&);
-    void operator=(const Delaunay&);
+    void initializeMainTriangle();
+    
+    
+    void addPoint(const unsigned index);
+    unsigned getTriangle();
+    ErrCode legalizeEdge();
     
     //=========================================================================
     /// @var points
     /// @brief  A pointer to a Vertex3D struct. Will be used to allocate a
-    ///         dinamyc array which will store our points.
+    ///         dynamic array which will store our points.
     ///
     //=========================================================================
     Vertex3D* points;
     
     //=========================================================================
+    /// @var coords
+    /// @brief  A pointer to a Vertex2D struct. Will be used to allocate a
+    ///         dynamic array which will store the coords for our 2d triangles.
+    ///
+    /// @NOTE   we allocate 2 more vertices at the end of the array which will
+    ///         serve as the vertices of our main circumscribing triangle.
+    //=========================================================================
+    Vertex2D* coords;
+    
+    //=========================================================================
+    /// @var coords
+    /// @brief  A pointer to a Vertex2D struct. Will be used to allocate a
+    ///         dynamic array which will store the coords for our 2d triangles.
+    ///
+    //=========================================================================
+    float* heights;
+    
+    //=========================================================================
     /// @var numOfPoints
     /// @brief  The number of sample points. This is also the size of the points
-    ///         array.
+    ///         array, the size of the coords and the size of the heights arrays.
     ///
     //=========================================================================
     unsigned numOfPoints;
     
     //=========================================================================
     /// @var triangulation
-    /// @brief  A vector of triangle objects. This is the entire finished
+    /// @brief  A vector of triangle objects. This is the entire, finished
     ///         triangulation that will be passed for drawing.
     ///
+    /// @TODO   Figure out a way to set the initial size of the vector
+    ///         2n - 2 - k Triangles will be made for every single triangulation.
     //=========================================================================
     std::vector<Triangle> triangulation;
 };

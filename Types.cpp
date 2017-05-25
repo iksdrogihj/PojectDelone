@@ -5,7 +5,7 @@
 //  Created by Todor Ivanov on 2/17/17.
 //  Copyright © 2017 Todor Ivanov. All rights reserved.
 //
-#include "GraphicTypes.hpp"
+#include "Types.hpp"
 
 bool Vertex3D::operator<=(const Vertex3D& point2)
 {
@@ -15,4 +15,11 @@ bool Vertex3D::operator<=(const Vertex3D& point2)
     }
     else
         return false;
+}
+
+Vertex2D& Vertex2D::operator=(const Vertex3D& point)
+{
+    this->x = point.x;
+    this->y = point.y;
+    return *this;
 }
