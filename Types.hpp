@@ -36,9 +36,4 @@ struct Triangle
 {
     unsigned vertex[3];
 };
-
-struct MainTriangle
-{
-    Vertex2D points[3];
-};
 #endif /* Types_hpp */
