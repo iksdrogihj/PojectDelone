@@ -5,9 +5,9 @@
 //  Created by Todor Ivanov on 5/22/17.
 //  Copyright © 2017 Todor Ivanov. All rights reserved.
 //
+#include <stdlib.h>
 #include "Sorting.hpp"
 #include "Delaunay.hpp"
-#include <stdlib.h>
 
 Delaunay::Delaunay()
 {

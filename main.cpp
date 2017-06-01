@@ -6,44 +6,27 @@
 //  Copyright © 2017 Todor Ivanov. All rights reserved.
 //
 
-#include <GLFW/glfw3.h>
+//  NOTE:   <GL/glew.h> MUST BE INCLUDED FIRST!!!
+//          glew overrides some includes(ex gl.h) from glfw
+//          and must be included first otherwise it throws an error.
+#include <GL/glew.h>
+#include "Renderer.hpp"
 #include "Delaunay.hpp"
 
-using namespace std;
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
 
 int main(int argc, char * argv[])
 {
-    GLFWwindow* window;
-    
-    /* Initialize the library */
+    /* Initialize the library glfw */
     if (!glfwInit())
-        return -1;
-    
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
     {
-        glfwTerminate();
+        fprintf(stderr, "Error, failed to initialize glfwInit");
         return -1;
     }
+    Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
+    renderer.render();
     
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
-    
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-        
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
-    
-    glfwTerminate();
-    return 0;
     return 0;
 }
