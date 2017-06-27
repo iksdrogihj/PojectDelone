@@ -10,7 +10,7 @@
 #define Delaunay_hpp
 
 #include <stdio.h>
-#include <vector>
+#include "TriangulationContainer.hpp"
 #include "Types.hpp"
 
 //=============================================================================
@@ -33,19 +33,12 @@ public:
     /// @ret    ErrCode for the state of completion.
     //=========================================================================
     ErrCode triangulate(const char* file);
-    
-    //=========================================================================
-    /// @fn printPointArray
-    /// @brief  Prints the values stored in the points array.
-    ///
-    //=========================================================================
-    void printPointArray();
+
 private:
     
     // Dissable cpy ctor & assignment operator
     Delaunay(const Delaunay&);
     void operator=(const Delaunay&);
-    
     
     //=========================================================================
     /// @fn  fileInput
@@ -55,6 +48,8 @@ private:
     /// @param  file - Name of the input file
     ///
     /// @ret    ErrCode for the state of completion.
+    /// @NOTE   Remove the need for points array by dispatching the input
+    ///         directly to the coords and height arrays.
     //=========================================================================
     ErrCode fileInput(const char* file);
     
@@ -64,7 +59,6 @@ private:
     ///         and one with the height that will be used for rendering.
     ///         We do this so we wont have to carry the extra baggage of an
     ///         unused field(i.e the height)
-    ///
     ///
     /// @ret    ErrCode for the state of completion.
     /// @NOTE   After this function executes points will no longer be a valid
@@ -78,11 +72,7 @@ private:
     ///         vertex coords are the last 3 indexes of the coords array.
     ///
     //=========================================================================
-    void initializeMainTriangle();
-    
-    
-    void addPoint(const unsigned index);
-    unsigned getTriangle();
+    ErrCode initializeMainTriangle();
     ErrCode legalizeEdge();
     
     //=========================================================================
@@ -121,13 +111,11 @@ private:
     
     //=========================================================================
     /// @var triangulation
-    /// @brief  A vector of triangle objects. This is the entire, finished
+    /// @brief  A list of triangle objects. This is the entire, finished
     ///         triangulation that will be passed for drawing.
     ///
-    /// @TODO   Figure out a way to set the initial size of the vector
-    ///         2n - 2 - k Triangles will be made for every single triangulation.
     //=========================================================================
-    std::vector<Triangle> triangulation;
+    TriangulationContainer triangulation;
 };
 
 #endif /* Delaunay_hpp */

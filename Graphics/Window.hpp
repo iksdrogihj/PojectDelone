@@ -32,6 +32,7 @@ public:
     
     ErrCode createWindow(const unsigned short width, const unsigned short heigh);
     GLFWwindow* getWindow(){return window;}
+    
 private:
     GLFWwindow* window;
 };

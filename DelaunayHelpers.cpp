@@ -15,13 +15,13 @@ ErrCode Delaunay::fileInput(const char* fileName)
     if(!file)
     {
         fprintf(stderr, "Error, cannot open file %s\n", fileName);
-        fclose(file);
         return FAILED;
     }
     
     if(fscanf(file, "%u", &numOfPoints) != 1)
     {
         fprintf(stderr, "Error, fscanf fail.\n");
+        fclose(file);
         return FAILED;
     }
     
@@ -34,12 +34,16 @@ ErrCode Delaunay::fileInput(const char* fileName)
     
     for(int i = 0; i < numOfPoints; ++i)
     {
-        fscanf(file, "%f %f %f", &points[i].x, &points[i].y, &points[i].height);
+        if(fscanf(file, "%f %f %f", &points[i].x, &points[i].y, &points[i].height) != 3)
+        {
+            fprintf(stderr, "Warning, unsuccessful read of points at index [%d] from file %s\n",i ,fileName);
+        }
     }
     
     fclose(file);
     return SUCCESS;
 }
+
 
 ErrCode Delaunay::splitPointsArray()
 {
@@ -54,9 +58,11 @@ ErrCode Delaunay::splitPointsArray()
     if(!coords)
     {
         fprintf(stderr, "Error, cannot allocate memory.\n");
+        free(heights);
         return FAILED;
     }
     
+    //TODO make a check for matching points
     for (size_t i = 0; i < numOfPoints; ++i)
     {
         coords[i] = points[i];

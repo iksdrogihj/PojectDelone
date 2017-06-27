@@ -10,6 +10,7 @@
 #define Renderer_hpp
 
 #include "Window.hpp"
+#define SOURCE_SIZE 1024
 
 class Renderer
 {
@@ -19,8 +20,15 @@ public:
     
     void render();
 private:
-    ErrCode loadVertexShader();
-    ErrCode loadFragmentShader();
+    ErrCode loadShader(const char* shadeFileName, char* shaderSourceCode);
+    unsigned getShaderFileSize(const char* shaderFileName);
+    
     Window window;
+    
+    char* vertexSourceCode;
+    char* fragmentSourceCode;
+    
+    const char* vertexShaderFileName;
+    const char* fragmentShaderFileName;
 };
 #endif /* Renderer_hpp */

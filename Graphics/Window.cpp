@@ -15,15 +15,16 @@ Window::Window()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
     
-    // Used only for MacOS make this usable only when u are compiling for Apples OS (Use guards)
-    // -----------------------------------------------------------------------------------------
+    // Used only for MacOS. Make this usable only when u are compiling for Apples OS (hint: Use guards)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 }
+
 
 Window::~Window()
 {
     glfwTerminate();
 }
+
 
 ErrCode Window::createWindow(const unsigned short width, const unsigned short heigh)
 {

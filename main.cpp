@@ -19,14 +19,28 @@
 
 int main(int argc, char * argv[])
 {
-    /* Initialize the library glfw */
-    if (!glfwInit())
-    {
-        fprintf(stderr, "Error, failed to initialize glfwInit");
-        return -1;
-    }
-    Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
-    renderer.render();
-    
+//    /* Initialize the library glfw */
+//    if (!glfwInit())
+//    {
+//        fprintf(stderr, "Error, failed to initialize glfwInit");
+//        return FAILED;
+//    }
+//    
+//    const char * sht="\
+//#    ";
+//    Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
+//    renderer.render();
+
+//    const char* name = "../../../ProjectDelone/Shaders/VertexShader.vs";
+//    FILE* file = fopen(name, "r");
+//    if(!file)
+//    {
+//        fprintf(stderr, "Error, cannot open file %s\n", name);
+//        fclose(file);
+//        return FAILED;
+//    }
+//    char tempArr[512];
+    Delaunay delone;
+    delone.triangulate("../../../ProjectDelone/SamplePointFiles/RANDOM.DAT");
     return 0;
 }

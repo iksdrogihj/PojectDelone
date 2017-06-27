@@ -29,6 +29,7 @@ static void bottomUpMerge(Vertex3D A[], Vertex3D B[], const unsigned left, const
     }
 }
 
+
 ErrCode bottomUpMergeSort(Vertex3D points[], const unsigned numOfPoints)
 {
     Vertex3D* helperArr = (Vertex3D*) malloc(sizeof(Vertex3D) * numOfPoints);

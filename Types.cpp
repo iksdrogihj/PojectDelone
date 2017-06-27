@@ -17,9 +17,25 @@ bool Vertex3D::operator<=(const Vertex3D& point2)
         return false;
 }
 
+
 Vertex2D& Vertex2D::operator=(const Vertex3D& point)
 {
     this->x = point.x;
     this->y = point.y;
     return *this;
+}
+
+Vertex2D& Vertex2D::operator=(const Vertex2D& point)
+{
+    this->x = point.x;
+    this->y = point.y;
+    return *this;
+}
+
+bool Vertex2D::operator==(const Vertex2D& point)
+{
+    if(this->x == point.x && this->y == point.y)
+        return true;
+    
+    return false;
 }
