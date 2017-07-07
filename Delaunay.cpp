@@ -50,7 +50,7 @@ ErrCode Delaunay::triangulate(const char* file)
         triangulation.addPoint(coords[i]);
     }
 
-    //legalizeEdge();
+    legalizeEdge();
     
     return SUCCESS;
 }

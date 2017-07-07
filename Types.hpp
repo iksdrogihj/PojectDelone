@@ -11,6 +11,9 @@
 
 enum ErrCode{SUCCESS, FAILED};
 
+struct Triangle;
+struct Node;
+
 
 struct Vertex3D
 {
@@ -31,8 +34,29 @@ struct Vertex2D
 };
 
 
+struct Edge
+{
+    Vertex2D point1;
+    Vertex2D point2;
+    Node* incidentTriangle1;
+    Node* incidentTriangle2;
+    bool operator==(Edge& edge);
+};
+
 struct Triangle
 {
     Vertex2D vertex[3];
+    
+    //goes: left, bottom, right; (counterclockwise order)
+    Edge edge[3];
 };
+
+
+struct Node
+{
+    Triangle triangle;
+    Node* next;
+    //Node* prev;
+};
+
 #endif /* Types_hpp */

@@ -20,7 +20,6 @@ TriangulationContainer::TriangulationContainer()
 }
 
 
-
 TriangulationContainer::~TriangulationContainer()
 {
     deleteTriangulation(head);
@@ -85,6 +84,49 @@ ErrCode TriangulationContainer::threeWaySplit(Node* parent, const Vertex2D& p)
     _createNewTriangle(first->triangle, parent->next->triangle.vertex[0], parent->next->triangle.vertex[1], p);
     _createNewTriangle(second->triangle, parent->next->triangle.vertex[1], parent->next->triangle.vertex[2], p);
     _createNewTriangle(third->triangle, parent->next->triangle.vertex[2], parent->next->triangle.vertex[0], p);
+    
+    // sets the edges of the triangles;
+    _setIncidentTriangle(first, third, first->triangle.edge[0]);
+    _setIncidentTriangle(first, parent, first->triangle.edge[1]);
+    _setIncidentTriangle(first, second, first->triangle.edge[2]);
+    
+    _setIncidentTriangle(second, first, second->triangle.edge[0]);
+    _setIncidentTriangle(second, parent, second->triangle.edge[1]);
+    _setIncidentTriangle(second, third, second->triangle.edge[2]);
+    
+    _setIncidentTriangle(third, second, third->triangle.edge[0]);
+    _setIncidentTriangle(third, parent, third->triangle.edge[1]);
+    _setIncidentTriangle(third, first, third->triangle.edge[2]);
+    
+    //sets parents edge. Move this to a different function ! ! ! !
+    if(parent->triangle.edge[0] == first->triangle.edge[0])
+        _setIncidentTriangle(parent, first, parent->triangle.edge[0]);
+    
+    else if(parent->triangle.edge[1] == first->triangle.edge[1])
+        _setIncidentTriangle(parent, first, parent->triangle.edge[1]);
+    
+    else if(parent->triangle.edge[2] == first->triangle.edge[2])
+        _setIncidentTriangle(parent, first, parent->triangle.edge[2]);
+    
+    else if(parent->triangle.edge[0] == second->triangle.edge[0])
+        _setIncidentTriangle(parent, second, parent->triangle.edge[0]);
+    
+    else if(parent->triangle.edge[1] == second->triangle.edge[1])
+        _setIncidentTriangle(parent, second, parent->triangle.edge[1]);
+    
+    else if(parent->triangle.edge[2] == second->triangle.edge[2])
+        _setIncidentTriangle(parent, second, parent->triangle.edge[2]);
+    
+    else if(parent->triangle.edge[0] == third->triangle.edge[0])
+        _setIncidentTriangle(parent, third, parent->triangle.edge[0]);
+    
+    else if(parent->triangle.edge[1] == third->triangle.edge[1])
+        _setIncidentTriangle(parent, third, parent->triangle.edge[1]);
+    
+    else if(parent->triangle.edge[2] == third->triangle.edge[2])
+        _setIncidentTriangle(parent, third, parent->triangle.edge[2]);
+    else
+        return FAILED;
     
     Node* toBeDeleted = parent->next;
     

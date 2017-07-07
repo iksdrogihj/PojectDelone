@@ -39,3 +39,12 @@ bool Vertex2D::operator==(const Vertex2D& point)
     
     return false;
 }
+
+
+bool Edge::operator==(Edge& edge)
+{
+    if(this->point1 == edge.point1 && this->point2 == edge.point2)
+        return true;
+    
+    return false;
+}

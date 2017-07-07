@@ -18,14 +18,6 @@ class Iterator
 };
 
 
-struct Node
-{
-    Triangle triangle;
-    Node* next;
-    //Node* prev;
-};
-
-
 class TriangulationContainer
 {
 public:
@@ -44,12 +36,14 @@ private:
     bool _liesOnEdge();
     ErrCode _initialThreeWaySplit(const Vertex2D& p);
     ErrCode _twoWaySplit(Node* parentNode, const Vertex2D& p);
-    Node* _getIncidentTriangle(const Node* node, Vertex2D& point1, Vertex2D& point2);
+    void _setIncidentTriangle(Node* first, Node* second, Edge& edge);
+    Node* _getIncidentTriangle(const Node* node, Edge& edge);
     
 private:
     ErrCode threeWaySplit(Node* node, const Vertex2D& p);
     ErrCode fourWaySplit(Node* node, const Vertex2D& p);
     void deleteTriangulation(Node* node);
+    //void setIncidentTriangle(Node* parent, Node* first, Node* second, Node* third) ;
     
     
     float alpha;
